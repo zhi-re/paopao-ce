@@ -176,16 +176,16 @@
                         class="attachment-price-wrap"
                         v-if="attachmentContents.length > 0"
                     >
-                        <n-input-number
-                            v-model:value="attachmentPrice"
-                            :min="0"
-                            :max="100000"
-                            placeholder="请输入附件价格，0为免费附件"
-                        >
-                            <template #prefix>
-                                <span> 附件价格￥</span>
-                            </template>
-                        </n-input-number>
+<!--                        <n-input-number-->
+<!--                            v-model:value="attachmentPrice"-->
+<!--                            :min="0"-->
+<!--                            :max="100000"-->
+<!--                            placeholder="请输入附件价格，0为免费附件"-->
+<!--                        >-->
+<!--                            <template #prefix>-->
+<!--                                <span> 附件价格￥</span>-->
+<!--                            </template>-->
+<!--                        </n-input-number>-->
                     </div>
                 </div>
             </n-upload>

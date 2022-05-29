@@ -3,3 +3,9 @@ __debug_bin
 config.yaml
 *.log
 paopao-api
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr

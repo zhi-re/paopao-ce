@@ -36,7 +36,7 @@
             </n-spin>
         </n-card>
         <n-card class="copyright-wrap" embedded :bordered="false" size="small">
-            <div class="copyright">&copy; 2022 PaoPao.Info</div>
+            <div class="copyright">&copy; 2022 PP.TKWB.COM</div>
             <div class="copyright">
                 <a
                     href="https://beian.miit.gov.cn/"
@@ -44,24 +44,24 @@
                     rel="noopener noreferrer"
                     class="beian-link"
                 >
-                    沪ICP备2020036525号-5
+<!--                    沪ICP备2020036525号-5-->
                 </a>
             </div>
             <div>
                 <n-space>
                     <a
-                        href="https://www.rocs.me"
+                        href="https://www.tkwb.com"
                         target="_blank"
                         class="hash-link"
-                        >Roc's Me</a
+                        >天空尾巴</a
                     >
-                    <a
-                        href="https://www.rocboss.com"
-                        target="_blank"
-                        class="hash-link"
-                    >
-                        ROCBOSS开源社区
-                    </a>
+<!--                    <a-->
+<!--                        href="https://www.rocboss.com"-->
+<!--                        target="_blank"-->
+<!--                        class="hash-link"-->
+<!--                    >-->
+<!--                        ROCBOSS开源社区-->
+<!--                    </a>-->
                 </n-space>
             </div>
         </n-card>

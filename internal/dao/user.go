@@ -2,17 +2,20 @@ package dao
 
 import (
 	"encoding/json"
-	"errors"
+	"github.com/rocboss/paopao-ce/global"
+
+	//"errors"
 	"fmt"
+	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
+	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/errors"
+	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/profile"
+	sms "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/sms/v20210111" // 引入sms
 	"math/rand"
-	"net/http"
 	"strconv"
 	"strings"
 	"time"
 
-	"github.com/rocboss/paopao-ce/global"
 	"github.com/rocboss/paopao-ce/internal/model"
-	"gopkg.in/resty.v1"
 )
 
 type JuhePhoneCaptchaRsp struct {
@@ -120,33 +123,38 @@ func (d *Dao) SendPhoneCaptcha(phone string) error {
 	captcha := rand.Intn(900000) + 100000
 	m := 5
 
-	gateway := "https://v.juhe.cn/sms/send"
+	//gateway := "https://v.juhe.cn/sms/send"
+	//
+	//client := resty.New()
+	//client.DisableWarn = true
+	//resp, err := client.R().
+	//	SetFormData(map[string]string{
+	//		"mobile":    phone,
+	//		"tpl_id":    global.AppSetting.SmsJuheTplID,
+	//		"tpl_value": fmt.Sprintf(global.AppSetting.SmsJuheTplVal, captcha, m),
+	//		"key":       global.AppSetting.SmsJuheKey,
+	//	}).Post(gateway)
+	//if err != nil {
+	//	return err
+	//}
+	//
+	//if resp.StatusCode() != http.StatusOK {
+	//	return errors.New(resp.Status())
+	//}
+	//
+	//result := &JuhePhoneCaptchaRsp{}
+	//err = json.Unmarshal(resp.Body(), result)
+	//if err != nil {
+	//	return err
+	//}
+	//
+	//if result.ErrorCode != 0 {
+	//	return errors.New(result.Reason)
+	//}
 
-	client := resty.New()
-	client.DisableWarn = true
-	resp, err := client.R().
-		SetFormData(map[string]string{
-			"mobile":    phone,
-			"tpl_id":    global.AppSetting.SmsJuheTplID,
-			"tpl_value": fmt.Sprintf(global.AppSetting.SmsJuheTplVal, captcha, m),
-			"key":       global.AppSetting.SmsJuheKey,
-		}).Post(gateway)
-	if err != nil {
-		return err
-	}
-
-	if resp.StatusCode() != http.StatusOK {
-		return errors.New(resp.Status())
-	}
-
-	result := &JuhePhoneCaptchaRsp{}
-	err = json.Unmarshal(resp.Body(), result)
-	if err != nil {
-		return err
-	}
-
-	if result.ErrorCode != 0 {
-		return errors.New(result.Reason)
+	result := sendTencentSms(phone, strconv.Itoa(captcha))
+	if result != nil {
+		return result
 	}
 
 	// 写入表
@@ -156,5 +164,37 @@ func (d *Dao) SendPhoneCaptcha(phone string) error {
 		ExpiredOn: time.Now().Add(time.Minute * time.Duration(m)).Unix(),
 	}
 	captchaModel.Create(d.engine)
+	return nil
+}
+
+func sendTencentSms(phone string, code string) error {
+	credential := common.NewCredential(
+		global.AppSetting.TencentSecretId,
+		global.AppSetting.TencentSecretKey,
+	)
+	cpf := profile.NewClientProfile()
+	cpf.HttpProfile.ReqMethod = "POST"
+	cpf.HttpProfile.Endpoint = "sms.tencentcloudapi.com"
+	cpf.SignMethod = "HmacSHA1"
+	client, _ := sms.NewClient(credential, "ap-guangzhou", cpf)
+	request := sms.NewSendSmsRequest()
+	request.SmsSdkAppId = common.StringPtr(global.AppSetting.TencentSmsSdkAppId)
+	request.SignName = common.StringPtr(global.AppSetting.TencentSignName)
+	request.TemplateId = common.StringPtr(global.AppSetting.TencentTemplateId)
+	request.TemplateParamSet = common.StringPtrs([]string{code})
+	request.PhoneNumberSet = common.StringPtrs([]string{"+86" + phone})
+	response, err := client.SendSms(request)
+	if _, ok := err.(*errors.TencentCloudSDKError); ok {
+		fmt.Printf("An API error has returned: %s", err)
+		global.Logger.Errorf("sms send err: %v", err)
+		return err
+	}
+	if err != nil {
+		panic(err)
+		global.Logger.Errorf("sms send err: %v", err)
+		return err
+	}
+	b, _ := json.Marshal(response.Response)
+	fmt.Printf("%s", b)
 	return nil
 }

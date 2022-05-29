@@ -49,6 +49,12 @@ type AppSettingS struct {
 	SmsJuheTplVal         string
 	AlipayAppID           string
 	AlipayPrivateKey      string
+	TencentSecretId       string
+	TencentSecretKey      string
+	TencentSmsSdkAppId    string
+	TencentTemplateId     string
+	TencentSignName       string
+	TencentCosUrl         string
 }
 
 type SearchSettingS struct {

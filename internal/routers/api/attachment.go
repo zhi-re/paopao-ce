@@ -1,11 +1,7 @@
 package api
 
 import (
-	"image"
-	"net/url"
-	"strings"
-
-	"github.com/aliyun/aliyun-oss-go-sdk/oss"
+	"context"
 	"github.com/disintegration/imaging"
 	"github.com/gin-gonic/gin"
 	"github.com/gofrs/uuid"
@@ -15,6 +11,10 @@ import (
 	"github.com/rocboss/paopao-ce/pkg/app"
 	"github.com/rocboss/paopao-ce/pkg/convert"
 	"github.com/rocboss/paopao-ce/pkg/errcode"
+	"github.com/tencentyun/cos-go-sdk-v5"
+	"image"
+	"net/http"
+	"net/url"
 )
 
 func GeneratePath(s string) string {
@@ -98,21 +98,38 @@ func UploadAttachment(c *gin.Context) {
 	randomPath := uuid.Must(uuid.NewV4()).String()
 	ossSavePath := uploadType + "/" + GeneratePath(randomPath[:8]) + "/" + randomPath[9:] + fileExt
 
-	client, err := oss.New(global.AliossSetting.AliossEndpoint, global.AliossSetting.AliossAccessKeyID, global.AliossSetting.AliossAccessKeySecret)
-	if err != nil {
-		global.Logger.Errorf("oss.New err: %v", err)
-		response.ToErrorResponse(errcode.FileUploadFailed)
-		return
-	}
+	//client, err := oss.New(global.AliossSetting.AliossEndpoint, global.AliossSetting.AliossAccessKeyID, global.AliossSetting.AliossAccessKeySecret)
+	//if err != nil {
+	//	global.Logger.Errorf("oss.New err: %v", err)
+	//	response.ToErrorResponse(errcode.FileUploadFailed)
+	//	return
+	//}
 
-	bucket, err := client.Bucket("paopao-assets")
-	if err != nil {
-		global.Logger.Errorf("client.Bucket err: %v", err)
-		response.ToErrorResponse(errcode.FileUploadFailed)
-		return
-	}
+	//bucket, err := client.Bucket("paopao-assets")
+	//if err != nil {
+	//	global.Logger.Errorf("client.Bucket err: %v", err)
+	//	response.ToErrorResponse(errcode.FileUploadFailed)
+	//	return
+	//}
 
-	err = bucket.PutObject(ossSavePath, fileReader)
+	// err = bucket.PutObject(ossSavePath, fileReader)
+
+	u, _ := url.Parse(global.AppSetting.TencentCosUrl)
+	b := &cos.BaseURL{BucketURL: u}
+	client := cos.NewClient(b, &http.Client{
+		Transport: &cos.AuthorizationTransport{
+			SecretID:  global.AppSetting.TencentSecretId,
+			SecretKey: global.AppSetting.TencentSecretKey,
+		},
+	})
+	opt := &cos.ObjectPutOptions{
+		ObjectPutHeaderOptions: &cos.ObjectPutHeaderOptions{
+			ContentLength: fileHeader.Size,
+		},
+		ACLHeaderOptions: nil,
+	}
+	_, err = client.Object.Put(context.Background(), ossSavePath, fileReader, opt)
+
 	if err != nil {
 		global.Logger.Errorf("bucket.PutObject err: %v", err)
 		response.ToErrorResponse(errcode.FileUploadFailed)
@@ -122,7 +139,8 @@ func UploadAttachment(c *gin.Context) {
 	// 构造附件Model
 	attachment := &model.Attachment{
 		FileSize: fileHeader.Size,
-		Content:  "https://" + global.AliossSetting.AliossDomain + "/" + ossSavePath,
+		//Content:  "https://" + global.AliossSetting.AliossDomain + "/" + ossSavePath,
+		Content: global.AppSetting.TencentCosUrl + "/" + ossSavePath,
 	}
 
 	if userID, exists := c.Get("UID"); exists {
@@ -258,42 +276,41 @@ func DownloadAttachment(c *gin.Context) {
 	}
 
 	// 开始构造下载地址
-	client, err := oss.New(global.AliossSetting.AliossEndpoint, global.AliossSetting.AliossAccessKeyID, global.AliossSetting.AliossAccessKeySecret)
-	if err != nil {
-		global.Logger.Errorf("oss.New err: %v", err)
-		response.ToErrorResponse(errcode.DownloadReqError)
-		return
-	}
+	//client, err := oss.New(global.AliossSetting.AliossEndpoint, global.AliossSetting.AliossAccessKeyID, global.AliossSetting.AliossAccessKeySecret)
+	//if err != nil {
+	//	global.Logger.Errorf("oss.New err: %v", err)
+	//	response.ToErrorResponse(errcode.DownloadReqError)
+	//	return
+	//}
 
-	bucket, err := client.Bucket("paopao-assets")
-	if err != nil {
-		global.Logger.Errorf("client.Bucket err: %v", err)
-		response.ToErrorResponse(errcode.DownloadReqError)
-		return
-	}
+	//bucket, err := client.Bucket("paopao-assets")
+	//if err != nil {
+	//	global.Logger.Errorf("client.Bucket err: %v", err)
+	//	response.ToErrorResponse(errcode.DownloadReqError)
+	//	return
+	//}
 
 	// 签名
-	objectKey := strings.Replace(content.Content, "https://"+global.AliossSetting.AliossDomain+"/", "", -1)
-	signedURL, err := bucket.SignURL(objectKey, oss.HTTPGet, 60)
-	if err != nil {
-		global.Logger.Errorf("client.SignURL err: %v", err)
-		response.ToErrorResponse(errcode.DownloadReqError)
-		return
-	}
-	ur, err := url.Parse(signedURL)
-	if err != nil {
-		global.Logger.Errorf("url.Parse err: %v", err)
-		response.ToErrorResponse(errcode.DownloadReqError)
-		return
-	}
-	epath, err := url.PathUnescape(ur.Path)
-	if err != nil {
-		global.Logger.Errorf("url.PathUnescape err: %v", err)
-		response.ToErrorResponse(errcode.DownloadReqError)
-		return
-	}
-
-	ur.Path = epath
-	ur.RawPath = epath
+	//objectKey := strings.Replace(content.Content, "https://"+global.AliossSetting.AliossDomain+"/", "", -1)
+	//signedURL, err := bucket.SignURL(objectKey, oss.HTTPGet, 60)
+	//if err != nil {
+	//	global.Logger.Errorf("client.SignURL err: %v", err)
+	//	response.ToErrorResponse(errcode.DownloadReqError)
+	//	return
+	//}
+	ur, err := url.Parse(content.Content)
+	//if err != nil {
+	//	global.Logger.Errorf("url.Parse err: %v", err)
+	//	response.ToErrorResponse(errcode.DownloadReqError)
+	//	return
+	//}
+	//epath, err := url.PathUnescape(ur.Path)
+	//if err != nil {
+	//	global.Logger.Errorf("url.PathUnescape err: %v", err)
+	//	response.ToErrorResponse(errcode.DownloadReqError)
+	//	return
+	//}
+	//ur.Path = content.content
+	//ur.RawPath = content.content
 	response.ToResponse(ur.String())
 }

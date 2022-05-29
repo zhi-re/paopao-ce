@@ -66,14 +66,14 @@ const routes = [
         },
         component: () => import('@/views/Star.vue'),
     },
-    {
-        path: '/wallet',
-        name: 'wallet',
-        meta: {
-            title: '钱包',
-        },
-        component: () => import('@/views/Wallet.vue'),
-    },
+    // {
+    //     path: '/wallet',
+    //     name: 'wallet',
+    //     meta: {
+    //         title: '钱包',
+    //     },
+    //     component: () => import('@/views/Wallet.vue'),
+    // },
     {
         path: '/setting',
         name: 'setting',
