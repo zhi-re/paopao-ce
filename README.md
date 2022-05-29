@@ -11,7 +11,7 @@
 
 <!-- PROJECT LOGO -->
 <div align="center">
-  <a href="https://github.com/rocboss/paopao-ce">
+  <a href="https://github.com/zhi-re/paopao-ce">
     <img src="https://cdn.rocs.me/static/paopao-logo.png" alt="Logo" width="80" height="80">
   </a>
 
@@ -20,11 +20,11 @@
   <p align="center">
     🔥一个清新文艺的微社区
     <br />
-    <a href="https://www.paopao.info/">View Demo</a>
+    <a href="https://pp.tkwb.com/">View Demo</a>
     ·
-    <a href="https://github.com/rocboss/paopao-ce/issues">Report Bug</a>
+    <a href="https://github.com/zhi-re/paopao-ce/issues">Report Bug</a>
     ·
-    <a href="https://www.rocs.me/archives/paopao.html">Features</a>
+    <a href="https://pp.tkwb.com">Features</a>
   </p>
 </div>
 
@@ -32,11 +32,11 @@
 
 ## 1. 截图预览
 
-[![明色主题][product-light-screenshot]](https://www.paopao.info)
+[![明色主题][product-light-screenshot]](https://pp.tkwb.com)
 
-[![暗色主题][product-dark-screenshot]](https://www.paopao.info)
+[![暗色主题][product-dark-screenshot]](https://pp.tkwb.com)
 
-更多演示请前往[官网](https://www.paopao.info)体验（谢绝灌水）
+更多演示请前往[官网](https://pp.tkwb.com)体验（谢绝灌水）
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -73,7 +73,7 @@ PaoPao主要由以下优秀的开源项目/工具构建
 
 克隆代码库
    ```sh
-   git clone https://github.com/rocboss/paopao-ce.git
+   git clone https://github.com/zhi-re/paopao-ce.git
    ```
 #### 3.1 后端
 
