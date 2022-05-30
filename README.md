@@ -82,7 +82,7 @@ PaoPao主要由以下优秀的开源项目/工具构建
 3. 编译后端
     ```sh
     go mod download
-    go build .
+    go build -o paopao-api .
     ```
 4. 启动后端
     ```sh
@@ -111,18 +111,33 @@ PaoPao主要由以下优秀的开源项目/工具构建
 代码结构比较简单，喜欢的朋友欢迎给个Star、贡献PR。
 
 <!-- MARKDOWN LINKS & IMAGES -->
+
 [contributors-shield]: https://img.shields.io/github/contributors/rocboss/paopao-ce?style=flat
+
 [contributors-url]: https://github.com/rocboss/paopao-ce/graphs/contributors
+
 [goreport-shield]: https://goreportcard.com/badge/github.com/rocboss/paopao-ce
+
 [goreport-url]: https://goreportcard.com/report/github.com/rocboss/paopao-ce
+
 [forks-shield]: https://img.shields.io/github/forks/rocboss/paopao-ce?style=flat
+
 [forks-url]: https://github.com/rocboss/paopao-ce/network/members
+
 [stars-shield]: https://img.shields.io/github/stars/rocboss/paopao-ce.svg?style=flat
+
 [stars-url]: https://github.com/rocboss/paopao-ce/stargazers
+
 [issues-shield]: https://img.shields.io/github/issues/rocboss/paopao-ce.svg?style=flat
+
 [issues-url]: https://github.com/rocboss/paopao-ce/issues
+
 [license-shield]: https://img.shields.io/github/license/rocboss/paopao-ce.svg?style=flat
+
 [license-url]: https://github.com/rocboss/paopao-ce/blob/master/LICENSE.txt
+
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat&logo=linkedin&colorB=555
+
 [product-light-screenshot]: https://cdn.rocs.me/static/paopao-light.jpeg
+
 [product-dark-screenshot]: https://cdn.rocs.me/static/paopao-dark.jpeg
