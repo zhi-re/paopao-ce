@@ -36,17 +36,17 @@
             </n-spin>
         </n-card>
         <n-card class="copyright-wrap" embedded :bordered="false" size="small">
-            <div class="copyright">&copy; 2022 PP.TKWB.COM</div>
-            <div class="copyright">
-                <a
-                    href="https://beian.miit.gov.cn/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="beian-link"
-                >
+            <div class="copyright">&copy; 2022 pp.tkwb.com</div>
+<!--            <div class="copyright">-->
+<!--                <a-->
+<!--                    href="https://beian.miit.gov.cn/"-->
+<!--                    target="_blank"-->
+<!--                    rel="noopener noreferrer"-->
+<!--                    class="beian-link"-->
+<!--                >-->
 <!--                    沪ICP备2020036525号-5-->
-                </a>
-            </div>
+<!--                </a>-->
+<!--            </div>-->
             <div>
                 <n-space>
                     <a
@@ -55,13 +55,17 @@
                         class="hash-link"
                         >天空尾巴</a
                     >
-<!--                    <a-->
-<!--                        href="https://www.rocboss.com"-->
-<!--                        target="_blank"-->
-<!--                        class="hash-link"-->
-<!--                    >-->
-<!--                        ROCBOSS开源社区-->
-<!--                    </a>-->
+                  <a href="https://pic.tkwb.com"
+                     target="_blank" class="hash-link">在线图床</a>
+                  <a href="https://tool.tkwb.com"
+                          target="_blank"
+                          class="hash-link">在线工具</a>
+                  <a href="https://ok.tkwb.com"
+                          target="_blank"
+                          class="hash-link">文本同步</a>
+                  <a href="https://pyq.tkwb.com"
+                          target="_blank"
+                          class="hash-link">朋友圈</a>
                 </n-space>
             </div>
         </n-card>
