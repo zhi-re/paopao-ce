@@ -128,6 +128,9 @@ func NewRouter() *gin.Engine {
 		// 发布动态
 		privApi.POST("/post", api.CreatePost)
 
+		// 置顶动态
+		privApi.POST("/post/stick", api.StickPost)
+
 		// 删除动态
 		privApi.DELETE("/post", api.DeletePost)
 

@@ -83,6 +83,9 @@ declare module NetParams {
     interface PostLockPost {
         id: number
     }
+    interface PostStickPost {
+        id: number
+    }
 
     interface PostGetPostStar {
         id: number

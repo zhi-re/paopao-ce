@@ -152,10 +152,10 @@
                                     :show-indicator="false"
                                     status="success"
                                     :stroke-width="10"
-                                    :percentage="(content.length / 200) * 100"
+                                    :percentage="(content.length / 300) * 100"
                                 />
                             </template>
-                            {{ content.length }} / 200
+                            {{ content.length }} / 300
                         </n-tooltip>
 
                         <n-button
@@ -331,7 +331,7 @@ const handleSearch = (k: string, prefix: string) => {
     }
 };
 const changeContent = (v: string) => {
-    if (v.length > 200) {
+    if (v.length > 300) {
         return;
     }
     content.value = v;

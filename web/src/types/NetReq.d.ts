@@ -77,6 +77,10 @@ declare module NetReq {
         status: boolean
     }
 
+    interface PostStickPost {
+        top_status: number
+    }
+
     interface PostGetPostCollection {
         status: boolean
     }
