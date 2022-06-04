@@ -136,7 +136,7 @@ watch(store.state, () => {
                     .catch((err) => {
                         console.log(err);
                     });
-            }, 5000);
+            }, 1000*60*5);
         }
     } else {
         if (msgLoop.value) {

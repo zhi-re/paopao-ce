@@ -36,7 +36,7 @@
             </n-spin>
         </n-card>
         <n-card class="copyright-wrap" embedded :bordered="false" size="small">
-            <div class="copyright">&copy; 2022 pp.tkwb.com</div>
+            <div class="copyright">&copy; 2022 pp.yld.net</div>
 <!--            <div class="copyright">-->
 <!--                <a-->
 <!--                    href="https://beian.miit.gov.cn/"-->
@@ -50,22 +50,16 @@
             <div>
                 <n-space>
                     <a
-                        href="https://www.tkwb.com"
+                        href="https://www.yld.net"
                         target="_blank"
                         class="hash-link"
-                        >天空尾巴</a
+                        >养乐多</a
                     >
-                  <a href="https://pic.tkwb.com"
+                  <a href="https://pic.yld.net"
                      target="_blank" class="hash-link">在线图床</a>
-                  <a href="https://tool.tkwb.com"
+                  <a href="https://tool.yld.net"
                           target="_blank"
                           class="hash-link">在线工具</a>
-                  <a href="https://ok.tkwb.com"
-                          target="_blank"
-                          class="hash-link">文本同步</a>
-                  <a href="https://pyq.tkwb.com"
-                          target="_blank"
-                          class="hash-link">朋友圈</a>
                 </n-space>
             </div>
         </n-card>
